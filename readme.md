@@ -48,11 +48,14 @@ There are **two main deployment strategies**:
 
 2. Push image to Amazon ECR
    -aws ecr create-repository --repository-name product-api
+   
    -aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account_id>.dkr.ecr.us-east-1.amazonaws.com
+   
    -docker tag product-api:latest <account_id>.dkr.ecr.us-east-1.amazonaws.com/product-api:latest
+   
    -docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/product-api:latest
 
-3. Deploy with Terraform
+4. Deploy with Terraform
     - Terraform will create:
         - ECS Cluster
         - ECS Task Definition (pointing to the ECR image)
@@ -60,7 +63,7 @@ There are **two main deployment strategies**:
         - Load Balancer
         - RDS MySQL Database
 
-4. Access
+5. Access
     - The service will be available through the Load Balancer endpoint created by Terraform.
 
 ---
@@ -101,5 +104,6 @@ Terraform can also provision EC2 with a **User Data Script** to run the JAR auto
 After starting the project, API documentation can be accessed via Swagger at:
 
 http://localhost:8080/swagger-ui.html
+
 
 

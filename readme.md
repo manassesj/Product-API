@@ -42,18 +42,25 @@ The API will be available at:
 In production, the infrastructure is provisioned using **Terraform** and deployed through the **AWS CLI**.  
 There are **two main deployment strategies**:
 
-### Option 1: ECS + Docker (Recommended)
-1. Build the Docker image
+## Option 1: Deploy with ECS + Docker
+
+1. Build the Docker image:
    docker build -t product-api .
 
-2. Push image to Amazon ECR
-   -aws ecr create-repository --repository-name product-api
-   
-   -aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account_id>.dkr.ecr.us-east-1.amazonaws.com
-   
-   -docker tag product-api:latest <account_id>.dkr.ecr.us-east-1.amazonaws.com/product-api:latest
-   
-   -docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/product-api:latest
+2. Push the image to Amazon ECR:
+
+   a. Create the ECR repository:
+      aws ecr create-repository --repository-name product-api
+
+   b. Authenticate Docker with ECR:
+      aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account_id>.dkr.ecr.us-east-1.amazonaws.com
+
+   c. Tag the image:
+      docker tag product-api:latest <account_id>.dkr.ecr.us-east-1.amazonaws.com/product-api:latest
+
+   d. Push the image:
+      docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/product-api:latest
+
 
 4. Deploy with Terraform
     - Terraform will create:
@@ -65,26 +72,6 @@ There are **two main deployment strategies**:
 
 5. Access
     - The service will be available through the Load Balancer endpoint created by Terraform.
-
----
-
-### Option 2: EC2 + JAR (Simpler, less scalable)
-1. Package the application
-   ./mvnw clean package -DskipTests
-
-2. Terraform creates resources
-    - EC2 instance
-    - Security Groups
-    - RDS MySQL
-
-3. Upload JAR to EC2
-   scp -i my-key.pem target/product-api.jar ec2-user@<ec2-public-ip>:/home/ec2-user/
-
-4. Run application
-   ssh -i my-key.pem ec2-user@<ec2-public-ip>
-   java -jar product-api.jar
-
-Terraform can also provision EC2 with a **User Data Script** to run the JAR automatically at startup.
 
 ---
 
@@ -104,6 +91,7 @@ Terraform can also provision EC2 with a **User Data Script** to run the JAR auto
 After starting the project, API documentation can be accessed via Swagger at:
 
 http://localhost:8080/swagger-ui.html
+
 
 
 

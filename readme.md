@@ -22,11 +22,11 @@ You can use the provided script:
 source setenv.sh
 
 Or manually:
-export DB_URL="jdbc:mysql://localhost:3306/productdb"
-export DB_USERNAME="user"
-export DB_PASSWORD="strongPassword"
-export JWT_SECRET="bXlTM2N1cjNTdXAzckwwbmdKV1RLM3khMjAyNSQlXiYqKCk="
-export SPRING_PROFILES_ACTIVE="dev"
+- export DB_URL="jdbc:mysql://localhost:3306/productdb"
+- export DB_USERNAME="user"
+- export DB_PASSWORD="strongPassword"
+- export JWT_SECRET="bXlTM2N1cjNTdXAzckwwbmdKV1RLM3khMjAyNSQlXiYqKCk="
+- export SPRING_PROFILES_ACTIVE="dev"
 
 ### 3. Run Docker Compose
 docker-compose up --build -d
@@ -101,3 +101,4 @@ Terraform can also provision EC2 with a **User Data Script** to run the JAR auto
 After starting the project, API documentation can be accessed via Swagger at:
 
 http://localhost:8080/swagger-ui.html
+
